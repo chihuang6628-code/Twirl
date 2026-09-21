@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2E86C8">
+<title>四國自駕手帳｜2026.12.27–2027.01.02</title>
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --sky:#2E86C8;        /* 主色：瀨戶內海的天藍 */
+  --sky-deep:#1B5E8C;
+  --sky-soft:#E3F1FB;
+  --sky-line:#BDDCF1;
+  --ink:#16323F;        /* 內文墨色 */
+  --ink-2:#4C6575;      /* 次要文字（提高日光下對比）*/
+  --paper:#F6FAFC;
+  --card:#FFFFFF;
+  --sun:#D98A2B;        /* 暖色點綴：只用於邊框與底色 */
+  --sun-text:#97570D;   /* 暖色文字：符合 AA 的深橘 */
+  --line:#E4EDF2;
+
+  --serif:"Iowan Old Style",Palatino,"Hiragino Mincho ProN","Yu Mincho","Songti TC","Noto Serif TC","Source Han Serif TC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",sans-serif;
+
+  --pad:18px;
+  --radius:14px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  background:var(--paper);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --sky:#6FB6E8; --sky-deep:#A9D6F4; --sky-soft:#17323F; --sky-line:#27475A;
+    --ink:#E7F1F6; --ink-2:#A9BFCA; --paper:#0E1E26; --card:#152B35; --sun:#E7B168; --sun-text:#F0C078; --line:#24414F;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 108px)}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.72;
+  letter-spacing:.01em;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:var(--sky-deep);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--sky);outline-offset:2px;border-radius:6px}
+
+/* ---------- header ---------- */
+.top{
+  padding:22px var(--pad) 16px;
+  background:linear-gradient(180deg,var(--sky-soft),var(--paper));
+  border-bottom:1px solid var(--line);
+}
+.top h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:27px;line-height:1.35;margin:0 0 6px;letter-spacing:.03em;
+}
+.top .range{
+  font-family:var(--serif);font-size:15px;color:var(--ink-2);
+  letter-spacing:.06em;margin:0;
+}
+.countdown{
+  margin-top:12px;display:inline-block;
+  background:var(--card);border:1px solid var(--sky-line);
+  color:var(--sky-deep);border-radius:999px;
+  padding:6px 14px;font-size:14px;font-weight:600;
+}
+
+/* ---------- tabs ---------- */
+.stickybar{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+  background:var(--paper);
+}
+.tabs{
+  display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;
+  background:var(--card);border-bottom:1px solid var(--line);
+  padding:0 8px;-webkit-overflow-scrolling:touch;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:0 0 auto;appearance:none;background:none;border:0;
+  font-family:var(--sans);font-size:15.5px;color:var(--ink-2);
+  padding:14px 12px 11px;border-bottom:3px solid transparent;
+  cursor:pointer;white-space:nowrap;
+}
+.tab[aria-selected="true"]{color:var(--sky-deep);font-weight:700;border-bottom-color:var(--sky)}
+
+/* ---------- day rail ---------- */
+.dayrail{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+  padding:10px var(--pad);background:var(--paper);
+  border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch;
+}
+.dayrail::-webkit-scrollbar{display:none}
+.daychip{
+  flex:0 0 auto;appearance:none;cursor:pointer;
+  background:var(--card);border:1px solid var(--sky-line);border-radius:12px;
+  padding:7px 12px;min-width:62px;text-align:center;color:var(--ink-2);
+  font-family:var(--sans);line-height:1.25;
+}
+.daychip b{display:block;font-family:var(--serif);font-size:16px;color:var(--ink);letter-spacing:.04em}
+.daychip span{font-size:11.5px}
+.daychip[aria-pressed="true"]{background:var(--sky-deep);border-color:var(--sky-deep);color:#fff;box-shadow:0 2px 8px rgba(27,94,140,.3)}
+.daychip[aria-pressed="true"] b{color:#fff}
+
+/* ---------- panels ---------- */
+main{padding:0 var(--pad) 92px;max-width:640px;margin:0 auto}
+.panel[hidden]{display:none}
+.fade{animation:rise .22s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+
+/* ---------- day head ---------- */
+.dayhead{padding:22px 0 6px}
+.dayhead .date{
+  font-family:var(--serif);font-size:15px;letter-spacing:.08em;color:var(--sky-deep);margin:0;
+}
+.dayhead h2{
+  font-family:var(--serif);font-weight:600;font-size:23px;line-height:1.45;
+  margin:4px 0 10px;letter-spacing:.02em;
+}
+.dayhead.newyear .date{color:var(--sun-text)}
+.staytag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--sky-soft);color:var(--sky-deep);
+  border-radius:10px;padding:7px 11px;font-size:13.5px;line-height:1.5;
+}
+
+/* ---------- timeline ---------- */
+.timeline{list-style:none;margin:16px 0 0;padding:0;position:relative}
+.timeline::before{
+  content:"";position:absolute;left:13px;top:10px;bottom:24px;
+  width:2px;background:linear-gradient(180deg,var(--sky-line),var(--line));
+}
+.stop{position:relative;padding:0 0 18px 42px}
+.stop::before{
+  content:attr(data-icon);position:absolute;left:0;top:2px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--card);border:2px solid var(--sky-line);
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+}
+.stop.key::before{border-color:var(--sky);box-shadow:0 0 0 4px var(--sky-soft)}
+.stop .time{
+  font-size:15px;font-weight:700;color:var(--sky-deep);
+  font-variant-numeric:tabular-nums;letter-spacing:.04em;
+}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:13px 15px;margin-top:5px;
+}
+.stop.key .card{border-color:var(--sky-line)}
+.card h3{margin:0;font-size:18px;font-weight:700;line-height:1.48}
+.card p{margin:5px 0 0;font-size:15.5px;color:var(--ink-2);line-height:1.68}
+.maplink{
+  display:inline-flex;align-items:center;gap:5px;margin-top:9px;
+  font-size:13.5px;font-weight:600;color:var(--sky-deep);text-decoration:none;
+  background:var(--sky-soft);border-radius:8px;padding:6px 11px;
+}
+.note{
+  margin:6px 0 0;font-size:14.5px;color:var(--ink-2);
+  border-left:3px solid var(--sky-line);padding-left:10px;
+}
+
+/* ---------- pager ---------- */
+.pager{display:flex;gap:10px;margin-top:10px}
+.pager button{
+  flex:1;appearance:none;cursor:pointer;
+  background:var(--card);border:1px solid var(--sky-line);border-radius:12px;
+  color:var(--sky-deep);font-family:var(--sans);font-size:15px;font-weight:600;
+  padding:13px 10px;
+}
+.pager button:disabled{opacity:.4;cursor:default}
+
+/* ---------- placeholder ---------- */
+/* ---------- 其他分頁 ---------- */
+.sec{margin:26px 0 0}
+.sec > h2{
+  font-family:var(--serif);font-weight:600;font-size:20px;
+  margin:0 0 4px;letter-spacing:.03em;
+}
+.sec > .lead{margin:0 0 12px;font-size:14.5px;color:var(--ink-2)}
+.item{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 15px;margin-bottom:10px;
+}
+.item h3{margin:0;font-size:17.5px;font-weight:700;line-height:1.48}
+.item .meta{
+  margin:5px 0 0;font-size:14.5px;line-height:1.62;color:var(--sky-deep);
+  font-variant-numeric:tabular-nums;
+}
+.item p{margin:7px 0 0;font-size:15.5px;color:var(--ink-2);line-height:1.68}
+.item .tip{
+  margin:8px 0 0;font-size:14.5px;color:var(--ink-2);
+  border-left:3px solid var(--sky-line);padding-left:10px;
+}
+.warn{
+  margin:8px 0 0;font-size:14.5px;line-height:1.66;color:var(--ink);
+  background:rgba(217,138,43,.10);border-left:3px solid var(--sun);
+  padding:9px 11px;border-radius:0 8px 8px 0;
+}
+.warn::before{
+  content:"注意";display:inline-block;margin-right:7px;
+  font-size:11.5px;font-weight:700;letter-spacing:.06em;
+  color:var(--sun-text);vertical-align:1px;
+}
+.badge{
+  display:inline-block;margin-left:6px;padding:1px 7px;border-radius:6px;
+  font-size:11.5px;font-weight:700;vertical-align:2px;
+  background:var(--sky-soft);color:var(--sky-deep);
+}
+.badge.est{background:rgba(217,138,43,.18);color:var(--sun-text)}
+.legend{
+  margin:14px 0 0;font-size:13px;color:var(--ink-2);
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+}
+.money{border-top:1px solid var(--line);padding:9px 0;display:flex;gap:12px;align-items:baseline}
+.money:first-of-type{border-top:0}
+.money .k{flex:1;font-size:15px}
+.money .k small{display:block;font-size:13px;color:var(--ink-2)}
+.money .v{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.total{
+  margin-top:12px;background:var(--sky-soft);border-radius:12px;padding:13px 15px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+}
+.total b{font-family:var(--serif);font-size:19px;color:var(--sky-deep);font-variant-numeric:tabular-nums}
+.phrase{display:flex;flex-wrap:wrap;gap:4px 10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+.phrase:first-child{border-top:0}
+.phrase .jp{flex:1 1 60%;min-width:0;font-weight:600;word-break:break-word}
+.phrase .zh{flex:1 1 auto;color:var(--ink-2);font-size:14px;text-align:right}
+
+/* ---------- 匯率換算機 ---------- */
+.fab{
+  position:fixed;right:16px;z-index:40;
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--sky);color:#fff;font-size:24px;line-height:1;
+  box-shadow:0 4px 16px rgba(22,50,63,.28);
+}
+.fab:active{transform:scale(.94)}
+.sheet-bg{
+  position:fixed;inset:0;z-index:50;background:rgba(10,25,33,.45);
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.sheet-bg[hidden]{display:none}
+.sheet{
+  width:100%;max-width:560px;background:var(--card);
+  border-radius:18px 18px 0 0;padding:18px 18px calc(22px + env(safe-area-inset-bottom,0px));
+  max-height:86vh;overflow-y:auto;
+  animation:up .2s ease-out;
+}
+@keyframes up{from{transform:translateY(18px);opacity:.6}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet h2{font-family:var(--serif);font-size:19px;margin:0 0 2px;font-weight:600}
+.sheet .hint{margin:0 0 14px;font-size:13px;color:var(--ink-2)}
+.cvt{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cvt label{flex:0 0 52px;font-size:14px;font-weight:700;color:var(--sky-deep)}
+.cvt input{
+  flex:1;min-width:0;width:100%;font-family:var(--sans);font-size:19px;font-weight:600;
+  color:var(--ink);background:var(--paper);border:1px solid var(--sky-line);
+  border-radius:10px;padding:11px 12px;font-variant-numeric:tabular-nums;
+}
+.rate-row{display:flex;align-items:center;gap:8px;margin:14px 0 10px;font-size:14px;color:var(--ink-2);flex-wrap:wrap}
+.rate-row input{
+  width:92px;font-family:var(--sans);font-size:15px;font-weight:700;color:var(--ink);
+  background:var(--paper);border:1px solid var(--sky-line);border-radius:8px;padding:7px 9px;
+  font-variant-numeric:tabular-nums;
+}
+.quick{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.quick button{
+  appearance:none;cursor:pointer;background:var(--sky-soft);color:var(--sky-deep);
+  border:0;border-radius:999px;padding:7px 13px;font-family:var(--sans);font-size:13.5px;font-weight:600;
+}
+.sheet-close{
+  width:100%;margin-top:16px;appearance:none;cursor:pointer;
+  background:var(--sky);color:#fff;border:0;border-radius:12px;
+  font-family:var(--sans);font-size:15.5px;font-weight:600;padding:13px;
+}
+@media (max-width:360px){
+  :root{--pad:14px}
+  body{font-size:16px}
+  .top h1{font-size:24px}
+  .dayhead h2{font-size:21px}
+  .tab{font-size:14.5px;padding:13px 9px 10px}
+  .stop{padding-left:38px}
+  .fab{width:50px;height:50px;font-size:21px}
+}
+@media print{
+  :root{
+    --paper:#fff;--card:#fff;--ink:#000;--ink-2:#333;
+    --sky:#14486B;--sky-deep:#14486B;--sky-soft:#EEF5FA;--sky-line:#9BBBD2;
+    --sun-text:#7A4708;--line:#CCC;
+    padding:0;
+  }
+  body{background:#fff;font-size:11pt;line-height:1.55}
+  .stickybar,.dayrail,.pager,.fab,.sheet-bg,.reset,.maplink{display:none !important}
+  main{max-width:none;padding:0 8mm 8mm}
+  .panel[hidden]{display:block !important}
+  .top{background:none;border-bottom:2px solid #14486B;padding:0 8mm 6mm}
+  .top h1{font-size:22pt}
+  .countdown{display:none}
+  .panel{break-before:page;page-break-before:always}
+  #panel-plan{break-before:auto;page-break-before:auto}
+  .dayhead{break-before:page;page-break-before:always;padding-top:0}
+  #dayview .dayhead:first-of-type{break-before:auto;page-break-before:auto}
+  .sec,.item,.stop,.card,.money,.chk,.phrase{break-inside:avoid;page-break-inside:avoid}
+  .sec > h2,.dayhead h2{break-after:avoid;page-break-after:avoid}
+  .item,.card{border:1px solid #CCC;box-shadow:none}
+  .warn{background:#FBF3E8;border-left:3px solid #B4791F}
+  .chk input{border:1.5px solid #666}
+  footer{border-top:1px solid #CCC;margin-top:6mm}
+}
+  :root{--pad:14px}
+  body{font-size:16px}
+  .top h1{font-size:24px}
+  .dayhead h2{font-size:21px}
+  .tab{font-size:14.5px;padding:13px 9px 10px}
+  .stop{padding-left:38px}
+  .fab{width:50px;height:50px;font-size:21px}
+}
+.chk{display:flex;align-items:flex-start;gap:11px;padding:10px 0;border-top:1px solid var(--line);cursor:pointer}
+.chk:first-child{border-top:0}
+.chk input{
+  appearance:none;width:22px;height:22px;margin:1px 0 0;flex:0 0 auto;
+  border:2px solid var(--sky-line);border-radius:6px;background:var(--card);
+  cursor:pointer;position:relative;
+}
+.chk input:checked{background:var(--sky-deep);border-color:var(--sky-deep)}
+.chk input:checked::after{
+  content:"✓";position:absolute;inset:0;color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.chk span{font-size:15.5px;line-height:1.6;flex:1;min-width:0}
+.chk input:checked + span{color:var(--ink-2);text-decoration:line-through}
+.chk .when{
+  display:inline-block;margin-right:7px;padding:1px 7px;border-radius:6px;
+  font-size:11.5px;font-weight:700;background:var(--sky-soft);color:var(--sky-deep);
+  vertical-align:1px;text-decoration:none;
+}
+.chk .when.now{background:rgba(217,138,43,.18);color:var(--sun-text)}
+.reset{
+  appearance:none;background:none;border:0;color:var(--ink-2);font-family:var(--sans);
+  font-size:13.5px;padding:8px 0;cursor:pointer;text-decoration:underline;
+}
+footer{padding:26px var(--pad) 8px;text-align:center;color:var(--ink-2);font-size:13px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>四國自駕手帳</h1>
+  <p class="range">2026.12.27 — 2027.01.02　七天六夜　三人同行</p>
+  <div class="countdown" id="countdown">出發倒數</div>
+</header>
+
+<div class="stickybar">
+<nav class="tabs" role="tablist" aria-label="主選單">
+  <button class="tab" role="tab" id="tab-plan" aria-controls="panel-plan" aria-selected="true">行程</button>
+  <button class="tab" role="tab" id="tab-spot" aria-controls="panel-spot" aria-selected="false">景點</button>
+  <button class="tab" role="tab" id="tab-food" aria-controls="panel-food" aria-selected="false">美食</button>
+  <button class="tab" role="tab" id="tab-move" aria-controls="panel-move" aria-selected="false">交通住宿</button>
+  <button class="tab" role="tab" id="tab-cost" aria-controls="panel-cost" aria-selected="false">預算</button>
+  <button class="tab" role="tab" id="tab-info" aria-controls="panel-info" aria-selected="false">實用資訊</button>
+</nav>
+
+<div class="dayrail" id="dayrail" aria-label="選擇日期"></div>
+</div>
+
+<main>
+  <section class="panel" id="panel-plan" role="tabpanel" aria-labelledby="tab-plan">
+    <div id="dayview"></div>
+    <div class="pager">
+      <button id="prev" type="button">← 前一天</button>
+      <button id="next" type="button">後一天 →</button>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-spot" role="tabpanel" aria-labelledby="tab-spot" hidden></section>
+  <section class="panel" id="panel-food" role="tabpanel" aria-labelledby="tab-food" hidden></section>
+  <section class="panel" id="panel-move" role="tabpanel" aria-labelledby="tab-move" hidden></section>
+  <section class="panel" id="panel-cost" role="tabpanel" aria-labelledby="tab-cost" hidden></section>
+  <section class="panel" id="panel-info" role="tabpanel" aria-labelledby="tab-info" hidden></section>
+
+  <footer>訂位資料來自你的訂單　·　票價與營業時間查於 2026 年 9 月，出發前請再確認　·　地圖連結需連網</footer>
+</main>
+
+<button class="fab" id="fab" type="button" aria-label="打開匯率換算機">💱</button>
+
+<div class="sheet-bg" id="cvtbg" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="cvttitle">
+    <h2 id="cvttitle">匯率換算機</h2>
+    <p class="hint">任一欄輸入就會即時換算。匯率可自己改，會記在這台裝置上。</p>
+
+    <div class="cvt">
+      <label for="jpy">日圓 ¥</label>
+      <input id="jpy" type="number" inputmode="decimal" placeholder="0" autocomplete="off">
+    </div>
+    <div class="cvt">
+      <label for="twd">台幣 NT$</label>
+      <input id="twd" type="number" inputmode="decimal" placeholder="0" autocomplete="off">
+    </div>
+
+    <div class="rate-row">
+      <span>¥100 =</span>
+      <input id="rate" type="number" inputmode="decimal" step="0.1" value="21">
+      <span>NT$（預設 21，出發前用當天匯率更新）</span>
+    </div>
+
+    <div class="quick">
+      <button type="button" data-jpy="520">渡輪 ¥520</button>
+      <button type="button" data-jpy="550">蔓橋 ¥550</button>
+      <button type="button" data-jpy="1200">遊覽船 ¥1,200</button>
+      <button type="button" data-jpy="1040">松山城 ¥1,040</button>
+      <button type="button" data-jpy="34320">租車 ¥34,320</button>
+    </div>
+
+    <button class="sheet-close" id="cvtclose" type="button">關閉</button>
+  </div>
+</div>
+
+<script>
+/* ---------- 行程資料 ---------- */
+const TRIP_START = new Date(2026,11,27);
+const map = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+
+const DAYS = [
+ {d:"12/27",w:"日",n:"D1",title:"抵達四國，夜宿琴平老街",
+  stay:"すずめのお宿 すずめの間｜香川県仲多度郡琴平町1329", stayQ:"すずめのお宿 琴平",
+  stops:[
+   {t:"14:30–17:55",i:"✈",k:1,h:"華航 CI 178 桃園 → 高松",p:"桃園第二航廈（T2）報到，17:55 抵達高松機場。高松只有一棟航廈，到達、租車櫃台都在 1F。",q:"桃園國際機場第二航廈",
+    note:"航廈以電子機票或華航 App 為準：桃園第三航廈北廊廳試營運中，華航部分班次會移過去。"},
+   {t:"17:55–19:00",i:"🚗",h:"入境、提領行李、取車",p:"訂單載明取車時間 19:00、高松機場店（高松市香南町由佐 2430）。繞車身一圈確認車況與油量再出發。",q:"高松空港 レンタカー",
+    note:"取車時間是訂單綁定的 19:00，落地到取車約一小時，剛好夠通關提行李。想提早的話要先打電話問門市。全額 ¥34,320 在這裡付清。"},
+   {t:"19:00–19:45",i:"🛣",h:"開往琴平町",p:"車程約 40 分鐘。"},
+   {t:"19:45–21:00",i:"🍜",h:"琴平市區晚餐",p:"先吃點熱的再進房。",q:"琴平 居酒屋",
+    warn:"讚岐烏龍麵店幾乎都是早上到下午營業，14:00–15:00 就收，晚上吃不到。琴平晚餐要找居酒屋或食堂，週日晚上小鎮店家收得早，建議先查好一兩間，或在機場、路上的便利商店先買備用。"},
+   {t:"21:00 起",i:"🏨",k:1,h:"入住 すずめのお宿",p:"洗去搭機疲憊，早點休息。",q:"すずめのお宿 琴平",
+    warn:"民宿型住宿常有門禁或最晚入住時間（多為 18:00–20:00）。班機 17:55 落地，取車加車程後最快也要 19:45 才到，務必先和民宿確認可否 21:00 前後入住並告知班機號碼。"}
+  ]},
+ {d:"12/28",w:"一",n:"D2",title:"金刀比羅宮、祖谷秘境，前進高知",
+  stay:"ゲストハウス 叶和 南川添 A（Airbnb）｜高知県高知市南川添15-25", stayQ:"高知市南川添15-25",
+  stops:[
+   {t:"08:30–09:15",i:"🍵",h:"退房與朝食",p:"民宿 10:00 前退房，車停參道周邊停車場。"},
+   {t:"09:15–11:30",i:"⛩",k:1,h:"金刀比羅宮",p:"走到本宮共 785 階。",q:"金刀比羅宮",
+    note:"爸媽體力若吃緊，可走到大門折返，或在資生堂神椿咖啡休息等候。"},
+   {t:"11:30–12:30",i:"🛣",h:"開往大步危峽",p:"車程約 1 小時。"},
+   {t:"12:30–14:00",i:"⛵",k:1,h:"大步危峽遊覽船＋午餐",p:"穿梭翡翠色溪谷與岩壁，休息站可吃香魚料理。",q:"大歩危峡観光遊覧船"},
+   {t:"14:00–15:30",i:"🌉",k:1,h:"祖谷蔓橋",p:"日本三大奇橋之一，藤蔓編成的懸橋。",q:"祖谷のかずら橋"},
+   {t:"15:30–17:00",i:"🛣",k:1,h:"開往高知市區",p:"從大步危沿國道 32 號南下，由大豊 IC 上高知道到高知 IC，車程約 1 小時 20 分。",q:"大豊インターチェンジ",
+    warn:"大豊 IC 自 2026/4/8 起改為 ETC 專用收費站，沒插 ETC 卡的車進不去。取車時務必加租 ETC 卡並確認已插入車載機。萬一沒有 ETC，只能全程走國道 32 號，會多花不少時間。",
+    note:"冬天天黑得早，盡量在天色全暗前下山。"},
+   {t:"17:00–17:30",i:"🏨",h:"入住 叶和 南川添 A",p:"放行李、稍作休息。",q:"高知市南川添15-25"},
+   {t:"18:00–20:30",i:"🔥",k:1,h:"弘人市場晚餐",p:"現點現烤的稻草炙燒鰹魚（明神丸等）與土佐鄉土料理。",q:"ひろめ市場 高知"}
+  ]},
+ {d:"12/29",w:"二",n:"D3",title:"高知名勝、太平洋海景，夜泊道後",
+  stay:"Check In Matsuyama｜愛媛県松山市三番町2-7-3", stayQ:"Check In Matsuyama 松山",
+  stops:[
+   {t:"08:30–09:30",i:"🍞",h:"退房與市區早餐",p:"10:00 前退房。"},
+   {t:"09:30–10:30",i:"🏯",k:1,h:"高知城（外觀與石垣）",p:"日本現存十二天守之一，追手門與天守同框是招牌畫面。",q:"高知城",
+    warn:"天守與懷德館每年 12/26–1/1 休館，12/29 進不去內部，門票 ¥500 也省下了。高知公園（追手門、三之丸石垣）全年免費開放，繞一圈約 40 分鐘就夠，剩下的時間挪給桂濱。"},
+   {t:"10:30–13:00",i:"🌊",k:1,h:"桂濱公園＋午餐",p:"車程約 25 分。坂本龍馬銅像，俯瞰弓形海灣，海邊走走再吃午餐。",q:"桂浜公園"},
+   {t:"13:00–15:30",i:"🛣",h:"橫越四國山地往松山",p:"車程約 2 小時 15 分。"},
+   {t:"15:30–16:30",i:"🏨",h:"入住 Check In Matsuyama",p:"放行李、喘口氣。",q:"Check In Matsuyama 松山"},
+   {t:"16:30–19:30",i:"♨",k:1,h:"道後溫泉街散策",p:"看百年木造國寶本館外觀，泡湯可選本館或新穎的飛鳥乃湯泉；順路看少爺機關鐘，吃宇和島鯛魚飯與橘子甜點。",q:"道後温泉本館"},
+   {t:"19:30 起",i:"🌙",h:"返回飯店休息"}
+  ]},
+ {d:"12/30",w:"三",n:"D4",title:"松山城，回高松還車，行程轉大眾運輸",
+  stay:"Corridor Bay 103｜香川県高松市錦町1丁目23-10（16:00 起入住）", stayQ:"高松市錦町1丁目23-10",
+  stops:[
+   {t:"09:00–09:30",i:"🚗",h:"退房、開往纜車站",p:"飯店 11:00 前退房即可，不用太趕。"},
+   {t:"09:30–11:45",i:"🏯",k:1,h:"松山城",p:"搭空中纜車上山，漫步石垣，鳥瞰瀨戶內海與松山全景。",q:"松山城 松山市"},
+   {t:"11:45–13:00",i:"🍽",h:"松山午餐",p:"愛媛在地烏龍麵或炸豬排定食。"},
+   {t:"13:00–15:30",i:"🛣",h:"開回香川高松",p:"走松山自動車道接高松自動車道，路況良好，約 2 小時。"},
+   {t:"15:30–16:30",i:"🏨",k:1,h:"抵達高松，16:00 起入住並卸行李",p:"入住時間 16:00 起，早到的話車停附近等一下。接下來三晚都住這裡，走到 JR 高松駅只要 5–8 分鐘。",q:"高松市錦町1丁目23-10",
+    note:"行李一定要先卸在民宿再去還車，還完車就沒有後車廂了。"},
+   {t:"16:30–17:45",i:"⛽",k:1,h:"加滿油，到高松車站店還車",p:"還車門市是高松車站店（高松市西の丸町 5-20），就在 JR 高松駅旁邊，還完走回民宿約 8 分鐘。",q:"高松市西の丸町5-20",
+    warn:"訂單載明還車時間 12/30 19:00、燃油規定「滿油取還車」。務必先在市區加油站加滿再進門市，否則會被收高價補油費，記得留收據。車只租到今天，之後三天全部改用大眾運輸。"},
+   {t:"18:00–20:30",i:"🍗",h:"高松站周邊晚餐與港邊散步",p:"晚餐吃香川名物骨付鳥。",q:"骨付鳥 高松市",
+    note:"車已經還了，今晚終於可以配啤酒。"}
+  ]},
+ {d:"12/31",w:"四",n:"D5",title:"直島跳島，海上跨年夜", ny:1,
+  stay:"Corridor Bay 103（連住）", stayQ:"高松市錦町1丁目23-10",
+  stops:[
+   {t:"09:00–09:40",i:"🚶",h:"步行至高松港購票",p:"車昨天已還，從錦町民宿走到高松港約 12 分鐘。渡輪票只收現金，大人單程 ¥520、當日往復 ¥990。",q:"高松港 フェリーターミナル"},
+   {t:"10:14–11:04",i:"⛴",k:1,h:"渡輪前往直島",p:"高松發 10:14，宮浦港 11:04 到，航程 50 分鐘。"},
+   {t:"11:05–11:45",i:"🎃",k:1,h:"草間彌生「紅南瓜」",p:"宮浦港一下船就到，可以走進南瓜裡感受光影。",q:"直島 赤かぼちゃ"},
+   {t:"11:45–13:00",i:"🍛",h:"午餐",p:"宮浦港邊小餐館。",
+    warn:"12/31 島上餐廳與商店很可能休息，建議前一晚或當天早上在高松先買好飯糰麵包帶上船。"},
+   {t:"13:00–16:00",i:"🎨",k:1,h:"Benesse House 海灘區",p:"搭島內接駁巴士，看防波堤上的黃南瓜與戶外雕塑群。",q:"ベネッセハウス 直島"},
+   {t:"16:00–17:00",i:"🚌",h:"搭巴士回宮浦港候船",p:"島內巴士約 15–20 分鐘，班次不密，提早一班比較安心。冬天天黑早，港邊可先買好回程票。"},
+   {t:"17:00–18:00",i:"⛴",k:1,h:"渡輪返回高松港",p:"宮浦發 17:00，高松 18:00 到。",
+    warn:"冬季宮浦發的渡輪只有 7:00、9:07、11:30、14:20、17:00 五班，17:00 是當天最後一班；高速船的 16:25 班次只在 3–11 月的週末例假日行駛，12/31 不能指望。年末年始可能另有特別時刻表，出發前查四國汽船官網。"},
+   {t:"18:30–21:00",i:"🎍",k:1,h:"跨年夜：年越蕎麥麵",p:"吃象徵長壽的蕎麥麵或烏龍麵，感受日本除夕氣氛。",
+    note:"12/31 店家多半提早打烊，傍晚先在超市或商店街買好比較保險。"}
+  ]},
+ {d:"01/01",w:"五",n:"D6",title:"屋島初詣，綾川購物採買（全程大眾運輸）", ny:1,
+  stay:"Corridor Bay 103（連住）", stayQ:"高松市錦町1丁目23-10",
+  stops:[
+   {t:"08:30–09:10",i:"🍵",h:"早餐，走到 JR 高松駅",p:"民宿走到高松駅約 5–8 分鐘。"},
+   {t:"09:20–10:00",i:"🚌",k:1,h:"上屋島山上",p:"主方案是高松駅 7 號乘車處的接駁巴士直通便，中停兵庫町、琴電屋島駅、四國村。備案是琴電志度線高松築港→琴電屋島（¥390、約 20 分）再轉接駁巴士（約 8 分）。",q:"JR高松駅",
+    warn:"這裡的 09:20 是暫定。直通便一天只有 4 往復、時刻官網只放 PDF，我查不到確切發車時間，出發前請打 ことでんバス 087-821-3033 確認，再回頭調整這天的起床時間。"},
+   {t:"10:00–11:00",i:"⛩",k:1,h:"屋島寺新年參拜",p:"四國八十八所第 84 番札所，境內自由參拜。元旦上午正是初詣最熱鬧的時候。",q:"屋島寺"},
+   {t:"11:00–12:00",i:"🌊",k:1,h:"獅子之靈巖展望台與やしまーる",p:"展望台看瀨戶內海多島美；やしまーる是玻璃迴廊、入館免費，1/1 是週五非公休日。",q:"獅子の霊巌展望台 屋島",
+    note:"やしまーる 在山上東側，離停車場約 550 公尺、走 7–10 分鐘，和展望台反方向，兩個都想去要留一小時。"},
+   {t:"12:00–13:00",i:"🍽",h:"山上午餐",p:"れいがん茶屋或やしまーる的咖啡區，邊吃邊看海。"},
+   {t:"13:10–14:00",i:"🚌",h:"搭巴士下山",p:"屋島山上發的接駁巴士有 13:18 這班（到琴電屋島駅 13:26），再轉琴電回高松築港。若直通便時刻搭得上，可直接坐回高松駅。",
+    warn:"已查到的下山班次是 10:06、11:18、13:18、14:30、15:42、16:54。末班 16:54 早於日落（約 17:07），這就是屋島排上午的原因。"},
+   {t:"14:10–15:00",i:"🚃",h:"琴電到綾川",p:"高松築港搭琴平線到綾川駅，大人 ¥590、約 40 分，出站走 3–5 分到 AEON。",q:"高松築港駅",
+    note:"12/30–1/3 行駛假日時刻表，班次比平日少，上車前先看好回程時間。"},
+   {t:"15:00–19:30",i:"🛍",k:1,h:"AEON Mall 綾川：吃飯、吹暖氣、搶福袋",p:"四國最大等級的購物中心，藥妝、日牌服飾、美食街都在裡面，是元旦少數正常營業的地方。晚餐也在這裡解決。",q:"イオンモール綾川",
+    warn:"2026 年元旦是 9:00 開始「超！初売り」、專門店 10:00–21:00、美食街 10:00–21:00、餐廳街 11:00–22:00。2027 年元旦官方尚未公布，出發前查官網確認。"},
+   {t:"19:30–20:30",i:"🚃",h:"琴電回高松，整理行李",p:"綾川發往高松築港的末班約 22:03，時間很夠。",
+    note:"買太多的話，AEON 有宅配服務可寄到機場或飯店，可以問服務台。"}
+  ]},
+ {d:"01/02",w:"六",n:"D7",title:"栗林公園品茗，烏龍麵收尾賦歸",
+  stay:"當晚返抵台灣", stayQ:"",
+  stops:[
+   {t:"09:00–09:40",i:"🧳",k:1,h:"退房，行李寄放高松駅",p:"10:00 前退房，走到 JR 高松駅約 5–8 分鐘，把行李投進站內的投幣置物櫃。",q:"JR高松駅",
+    note:"大型置物櫃約 ¥600–700 一個，元旦連假可能被塞滿，早點去卡位；也可以先問民宿能不能暫放。"},
+   {t:"09:45–10:00",i:"🚃",h:"琴電到栗林公園",p:"高松築港搭琴平線到栗林公園駅，大人 ¥200、約 9 分鐘。",q:"高松築港駅"},
+   {t:"10:00–12:30",i:"🍁",k:1,h:"栗林公園",p:"米其林三星名勝。飛來峰眺望南湖偃月橋，到掬月亭喝抹茶配和果子。1 月開園 7:00–17:00、大人 ¥500。",q:"栗林公園"},
+   {t:"12:30–14:00",i:"🍜",k:1,h:"讚岐烏龍麵收尾",p:"公園附近的手打名店，收尾吃一碗再走。",q:"さか枝うどん本店 高松",
+    warn:"1/2 很多烏龍麵店還在過年休假，出發前先確認當天有開。さか枝在番町、離栗林公園近，但只做到 15:00。"},
+   {t:"14:00–14:40",i:"🚃",h:"回高松駅取行李",p:"琴電栗林公園駅回高松築港 ¥200，再走到 JR 高松駅拿行李。"},
+   {t:"15:00–16:30",i:"🚌",k:1,h:"前往高松機場（兩個選項）",p:"選項 A 機場巴士：高松駅乘車處搭高松空港リムジンバス，大人 ¥1,300、約 45 分。選項 B 計程車：JR 高松駅到機場跳表約 ¥6,300 起，或事前預約定額計程車 ¥5,200–6,000 一車。",q:"高松空港",
+    warn:"機場巴士班次會配合每月航班調整，出發前務必查當月時刻表，抓 16:00 前後的班次。三人算下來巴士 ¥3,900、計程車 ¥5,200–6,300，差價換門到門與行李不用搬，看當天體力決定。"},
+   {t:"16:30–18:55",i:"🧾",h:"1F 國際線櫃台報到、託運、免稅退稅",p:"報到在 1F，出發大廳在 2F。新制是出境時在海關確認商品才退消費稅，免稅品盡量放手提行李。",q:"高松空港"},
+   {t:"18:55–21:05",i:"✈",k:1,h:"華航 CI 179 返抵桃園",p:"21:05 抵達桃園第二航廈，四國之旅結束。"}
+  ]}
+];
+
+/* ---------- 倒數 ---------- */
+(function(){
+  const el = document.getElementById("countdown");
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((TRIP_START - today) / 86400000);
+  if (diff > 0) el.textContent = "出發倒數 " + diff + " 天";
+  else if (diff >= -6) el.textContent = "旅程第 " + (1 - diff) + " 天";
+  else el.textContent = "旅程已圓滿結束";
+})();
+
+/* ---------- 行程頁 ---------- */
+const rail = document.getElementById("dayrail");
+const view = document.getElementById("dayview");
+let cur = 0;
+
+DAYS.forEach((day,i)=>{
+  const b = document.createElement("button");
+  b.className = "daychip"; b.type = "button";
+  b.setAttribute("aria-pressed", i===0 ? "true":"false");
+  b.innerHTML = "<b>"+day.n+"</b><span>"+day.d+"（"+day.w+"）</span>";
+  b.addEventListener("click", ()=>show(i));
+  rail.appendChild(b);
+});
+
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function render(day){
+  let h = '<div class="dayhead'+(day.ny?" newyear":"")+'">'
+        + '<p class="date">'+day.n+'　'+(day.d.charAt(0)==="1"?"2026/":"2027/")+day.d+'（'+day.w+'）</p>'
+        + '<h2>'+esc(day.title)+'</h2>'
+        + '<div class="staytag">🛏 '+esc(day.stay)+'</div></div><ol class="timeline">';
+  day.stops.forEach(s=>{
+    h += '<li class="stop'+(s.k?" key":"")+'" data-icon="'+s.i+'">'
+       + '<div class="time">'+s.t+'</div><div class="card"><h3>'+esc(s.h)+'</h3>'
+       + (s.p ? '<p>'+esc(s.p)+'</p>' : '')
+       + (s.note ? '<p class="note">'+esc(s.note)+'</p>' : '')
+       + (s.warn ? '<p class="warn">'+esc(s.warn)+'</p>' : '')
+       + (s.q ? '<a class="maplink" href="'+map(s.q)+'" target="_blank" rel="noopener">📍 在地圖開啟</a>' : '')
+       + '</div></li>';
+  });
+  return h + "</ol>";
+}
+
+function show(i){
+  cur = i;
+  const day = DAYS[i];
+  view.innerHTML = render(day);
+  view.classList.remove("fade"); void view.offsetWidth; view.classList.add("fade");
+  [...rail.children].forEach((c,n)=>c.setAttribute("aria-pressed", n===i ? "true":"false"));
+  rail.children[i].scrollIntoView({block:"nearest", inline:"center", behavior:"smooth"});
+  document.getElementById("prev").disabled = i===0;
+  document.getElementById("next").disabled = i===DAYS.length-1;
+}
+document.getElementById("prev").addEventListener("click",()=>{ if(cur>0){show(cur-1); window.scrollTo({top:0,behavior:"smooth"});}});
+document.getElementById("next").addEventListener("click",()=>{ if(cur<DAYS.length-1){show(cur+1); window.scrollTo({top:0,behavior:"smooth"});}});
+
+/* 旅程中自動跳到今天 */
+(function(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const idx = Math.round((today - TRIP_START)/86400000);
+  show(idx>=0 && idx<DAYS.length ? idx : 0);
+})();
+
+/* ---------- 其他分頁資料 ---------- */
+const LEGEND = '<p class="legend">✓ 已查證＝出自官方或旅遊資訊網站；※ 待確認＝依一般慣例整理，出發前請再向店家或官網確認。營業時間與票價都可能調整。</p>';
+
+function items(list){
+  return list.map(x =>
+    '<div class="item"><h3>'+esc(x.h)+(x.v===0?'<span class="badge est">※ 待確認</span>':(x.v===1?'<span class="badge">✓</span>':''))+'</h3>'
+    + (x.meta ? '<p class="meta">'+esc(x.meta)+'</p>' : '')
+    + (x.p ? '<p>'+esc(x.p)+'</p>' : '')
+    + (x.tip ? '<p class="tip">'+esc(x.tip)+'</p>' : '')
+    + (x.warn ? '<p class="warn">'+esc(x.warn)+'</p>' : '')
+    + (x.q ? '<a class="maplink" href="'+map(x.q)+'" target="_blank" rel="noopener">📍 在地圖開啟</a>' : '')
+    + '</div>').join("");
+}
+function sections(list){
+  return list.map(s =>
+    '<div class="sec"><h2>'+esc(s.title)+'</h2>'
+    + (s.lead ? '<p class="lead">'+esc(s.lead)+'</p>' : '')
+    + items(s.items) + '</div>').join("");
+}
+
+/* 景點 */
+document.getElementById("panel-spot").innerHTML = sections([
+{title:"Day 2　琴平・祖谷", items:[
+ {h:"金刀比羅宮",v:1,meta:"境內 6:00–18:00｜參拜免費｜本宮 785 階",q:"金刀比羅宮",
+  p:"海上守護神的總本宮，門前町一路往上都是石階。",
+  tip:"第 365 階是大門，第 500 階有資生堂經營的「神椿」咖啡，正好當中途休息點。參道入口可以租木杖。"},
+ {h:"大步危峽觀光遊覽船",v:1,meta:"大人 ¥1,200・孩童 ¥600｜航程約 30 分｜平日最終乘船 15:30（週末例假日 16:30）",q:"大歩危峡観光遊覧船",
+  p:"從谷底看兩岸的結晶片岩，視角和公路上完全不同。",
+  tip:"售票與餐廳在同一棟，先買票再吃午餐比較順。"},
+ {h:"祖谷蔓橋（かずら橋）",v:1,meta:"大人 ¥550・小學生 ¥350｜9–3 月 8:00–17:00｜單向通行｜停車另計 ¥300–510",q:"祖谷のかずら橋",
+  p:"日本三大奇橋之一，橋面用藤蔓編成，腳下有空隙看得到溪水。長 45 公尺、高 14 公尺。",
+  tip:"怕高或腳步不穩的話，在橋頭拍照就很夠；旁邊的琵琶瀑布走幾分鐘可到。山路較窄，會車要放慢。冬季 17:00 收班，下午別拖太晚。"}
+]},
+{title:"Day 3　高知・松山", items:[
+ {h:"高知城",v:1,meta:"天守・懷德館 9:00–17:00（最終入館 16:30）｜大人 ¥500",q:"高知城",
+  warn:"每年 12/26–1/1 休館，12/29 當天進不了天守。高知公園（追手門、石垣、三之丸）全年開放且免費，拍照散步不受影響。"},
+ {h:"桂濱",v:0,meta:"自由參觀｜停車場收費",q:"桂浜公園",
+  p:"弓形沙灘配太平洋，坂本龍馬銅像就在高台上。",
+  tip:"沙灘沒有護欄、冬天浪大，爸媽在龍馬像與展望台一帶就能取到最好的景。"},
+ {h:"道後溫泉本館",v:1,meta:"神之湯樓下 ¥700／60分・二樓席 ¥1,300・靈之湯二樓席 ¥2,000",q:"道後温泉本館",
+  p:"1894 年的木造三層樓公眾浴場，重要文化財，2024 年 7 月修復完工全館恢復營業。"},
+ {h:"道後溫泉別館 飛鳥乃湯泉",v:1,meta:"一樓浴室 ¥610 起／90分｜有露天風呂",q:"道後温泉別館 飛鳥乃湯泉",
+  tip:"比本館新、空間寬、動線好走，長輩泡湯建議選這邊；兩館相距步行 3 分鐘，可以一邊泡一邊看本館外觀。"}
+]},
+{title:"Day 4　松山", items:[
+ {h:"松山城",v:1,meta:"天守 ¥520｜纜車／吊椅往復 ¥520｜纜車 8:30–17:30、天守 9:00–17:00（冬季可能提早）",q:"松山城 松山市",
+  p:"現存十二天守之一，山頂可看到瀨戶內海與松山平野。",
+  tip:"纜車和單人吊椅兩種可選，爸媽走纜車。下纜車後到天守還有約 10 分鐘緩坡，慢慢走。"}
+]},
+{title:"Day 5–6　直島・高松", items:[
+ {h:"AEON Mall 綾川",v:1,meta:"專門店 10:00–21:00｜美食街 10:00–21:00｜餐廳街 11:00–22:00｜AEON 賣場 9:00–22:00、1F 食品 7:00–22:00｜停車免費約 4,000 席",q:"イオンモール綾川",
+  p:"香川県綾歌郡綾川町萱原 822-1。琴電綾川駅走路 3–5 分就到，1/1 沒車正好靠它。",
+  warn:"2026 年元旦是 9:00 開跑的「超！初売り」，1/1–1/4 舉辦。2027 年元旦時間官方尚未公布，出發前查官網。元旦當天商場比平日早開、專門店仍是 10:00。"},
+ {h:"屋島山上怎麼上去（已無車）",v:1,meta:"接駁巴士 高松駅直通便，冬休 12/25–1/7 行駛、一天 4 往復｜下山末班約 16:54",q:"高松駅 バスのりば",
+  p:"高松駅 7 號乘車處直達，中停兵庫町、琴電屋島駅、四國村。備案是琴電志度線到琴電屋島駅（¥390）再轉接駁巴士。",
+  warn:"下山末班早於日落，搭巴士看不到夕陽，所以屋島排在上午。真的想看日落只能搭計程車下山（市區往返估約 ¥4,000–5,000 一趟，未查證）。屋島 Skyway 本身通行免費、6:30–22:00，山上停車 ¥300，但這趟用不到了。"},
+ {h:"獅子之靈巖展望台",v:0,meta:"免費｜停車場走約 5 分鐘",q:"獅子の霊巌展望台 屋島",
+  p:"屋島山上西側，看瀨戶內海島嶼與高松市區的最佳點。1 月初日落約 17:10。"},
+ {h:"屋島寺",v:0,meta:"四國八十八所第 84 番札所｜境內自由參拜｜寶物館另收費",q:"屋島寺",
+  p:"傳為鑑真和尚開創，山上東側。元旦有初詣人潮，集中在上午到中午。"},
+ {h:"やしまーる（屋島山上交流據點）",v:1,meta:"9:00–17:00（週五、六、例假日前日至 21:00）｜週二休｜入館免費",q:"やしまーる 屋島",
+  p:"2022 年開幕、全長約 200 公尺的玻璃迴廊，展望空間可俯瞰高松市區與多島美。有咖啡與伴手禮。",
+  warn:"停車場走過去約 500–550 公尺、7–10 分鐘，和獅子之靈巖在相反方向。2027/1/1 是週五（非公休日），但年末年始是否照常開館官方未公布，出發前查。"},
+ {h:"草間彌生 紅南瓜／黃南瓜",v:1,meta:"戶外作品｜免費｜全天可看",q:"直島 赤かぼちゃ",
+  p:"紅南瓜就在宮浦港下船處，可以走進去；黃南瓜在 Benesse House 海灘的防波堤上。",
+  warn:"島上美術館多為週一與年末年始休館，12/31 的開館狀況要在 benesse-artsite.jp 的開館日曆確認。南瓜是戶外作品不受影響。"},
+ {h:"高松丸龜町商店街",v:0,meta:"店家各自營業，多為 10:00–20:00",q:"高松丸亀町商店街",
+  p:"日本最長拱廊商店街之一，有頂棚，下雨或冷天逛起來舒服。",
+  tip:"元旦有店家休到 1/2，臨時想逛的話 AEON 綾川比較保險。"}
+]},
+{title:"Day 7　高松", items:[
+ {h:"栗林公園",v:1,meta:"大人 ¥500・小中學生 ¥170｜1 月 7:00–17:00｜全年無休",q:"栗林公園",
+  p:"米其林綠色指南三星，池泉迴遊式庭園，1,400 多棵造型松。入園料 2025 年 6 月起由 ¥410 調為 ¥500。",
+  tip:"飛來峰是拍南湖與偃月橋的最佳點，從東門走過去約 10 分鐘。元旦（1/1）入園免費，若想省門票可以考慮調整那天的安排。閉園後只剩東門能出去，北門會上鎖。"},
+ {h:"掬月亭",v:1,meta:"9:00–16:30｜入亭 ¥700（含抹茶）｜僅年末休",q:"掬月亭 栗林公園",
+  p:"歷代藩主的大茶屋，坐在榻榻米上看南湖喝抹茶配和果子。",
+  tip:"1/2 有開，是這趟最適合讓爸媽坐下來好好休息的地方。"}
+]}
+]) + LEGEND;
+
+/* 美食 */
+document.getElementById("panel-food").innerHTML = sections([
+{title:"香川　讚岐烏龍麵", lead:"四國最該吃的東西。點餐先選冷熱與份量（小＝一玉），天婦羅自己夾，最後結帳。", items:[
+ {h:"注意：幾乎都只做早午餐",v:1,
+  p:"讚岐烏龍麵店多半 6:00–7:00 開門、14:00–15:00 就收，晚餐時段吃不到。",
+  warn:"另外 1/1–1/3 不少店還在過年休假。Day 7（1/2）的烏龍麵收尾，出發前務必確認當天有開。"},
+ {h:"さか枝うどん 本店",v:1,meta:"7:00–15:00｜かけ小 ¥320｜高松市番町",q:"さか枝うどん本店 高松",
+  p:"自助式老店，早上七點就開，湯頭用小魚乾加五種柴魚。",
+  tip:"離栗林公園近，Day 7 早餐或 Day 4 抵達後都順路。"},
+ {h:"手打十段 うどんバカ一代",v:1,meta:"6:00–18:00｜釜バターうどん ¥490",q:"手打十段 うどんバカ一代",
+  p:"釜奶油烏龍麵是招牌：熱麵拌奶油與生蛋，像和風培根蛋麵，孩子和長輩都接受得了。"},
+ {h:"松下製麺所",v:1,meta:"10:45–14:30（售完為止）｜一玉 ¥200",q:"松下製麺所 高松",
+  p:"製麵所直營，在地人的日常吃法，便宜到不太真實。"},
+ {h:"うどん本陣 山田家 本店",v:1,meta:"11:00–14:50／17:00–19:50（週末例假日 10:00–19:50）｜釜ぶっかけ ¥730｜牟禮町",q:"うどん本陣 山田家本店",
+  p:"日本庭園環繞的老宅，有正式座位和單點料理。",
+  tip:"前面幾家都是站著或擠板凳，這家是唯一能讓爸媽坐得舒服、慢慢吃的。但在牟禮町、市區東邊，沒車要搭琴電志度線到八栗駅再走一段，單趟就要 40 分鐘以上。Day 7 趕飛機不建議，想去的話要挪到 12/30 還車前那天。"}
+]},
+{title:"香川　骨付鳥與跨年、元旦的吃法", items:[
+ {h:"骨付鳥",v:0,meta:"親鳥（有嚼勁、味重）／雛鳥（軟嫩）｜一鶴等名店｜約 ¥1,000 上下",q:"骨付鳥 一鶴 高松",
+  p:"整支雞腿用香料烤到皮酥，配生高麗菜沾雞油，是丸龜、高松的宵夜名物。",
+  tip:"爸媽建議點雛鳥，親鳥要用力咬。點一份白飯把雞油拌進去是本地吃法。"},
+ {h:"年越蕎麥麵／烏龍麵",v:0,meta:"12/31 晚間",
+  p:"日本除夕吃蕎麥麵求長壽，香川很多店會改成烏龍麵。",
+  tip:"12/31 晚上的店多半提早打烊或只做外帶，建議傍晚先在超市或商店街買好，回民宿煮也很有氣氛。"},
+ {h:"餡餅雑煮（あんもち雑煮）",v:0,meta:"1/1 元旦限定的香川鄉土味",
+  p:"白味噌湯裡放包紅豆餡的麻糬，甜鹹混在一起，只有香川這樣吃。",
+  tip:"元旦市區餐廳有機會遇到，商店街或超市也可能有販售，遇到就試一碗。"}
+]},
+{title:"德島　祖谷（Day 2 午餐）", items:[
+ {h:"祖谷そば",v:1,meta:"祖谷そば もみじ亭 11:00–16:30（West-West 內）／清流のそば処 祖谷美人",q:"祖谷そば もみじ亭",
+  p:"山裡的蕎麥麵，麵短、容易斷，蕎麥味重，湯清爽。"},
+ {h:"でこまわし",v:1,meta:"約 ¥500",
+  p:"馬鈴薯、蒟蒻、豆腐串起來塗味噌炭烤，邊烤邊轉像轉木偶，名字由此而來。",
+  tip:"路邊攤形式，站著吃一串當墊胃很剛好。"},
+ {h:"あめご鹽烤",v:0,meta:"休息站與河邊小店",
+  p:"溪魚串起來插在炭火邊慢慢烤，冬天拿著吃很暖。"}
+]},
+{title:"高知　稻草炙燒與市場", items:[
+ {h:"藁焼き鰹のたたき（鹽味）",v:1,meta:"明神丸 ひろめ市場店｜現點現烤",q:"明神丸 ひろめ市場店",
+  p:"稻草大火把鰹魚外層燒出焦香，中心維持生的狀態。",
+  tip:"第一次吃建議點鹽味而不是醬油味，比較吃得出魚本身的味道。"},
+ {h:"ひろめ市場",v:1,meta:"週一至週六・例假日 10:00–23:00／週日 9:00 起｜全年無休",q:"ひろめ市場 高知",
+  p:"六十幾家攤位圍著共用座位，各攤點各攤買，像室內的大排檔。",
+  tip:"年末是全年最擠的時段之一，先派一個人佔位、其他人去點餐。"},
+ {h:"屋台餃子",v:0,meta:"19:00 起｜一份 7 個約 ¥600",
+  p:"高知的屋台小餃子，薄皮、一口一個，配啤酒。"},
+ {h:"アイスクリン",v:1,meta:"桂濱與市場都有",
+  p:"乳脂低、口感沙沙的古早味冰，高知人從小吃到大。"}
+]},
+{title:"愛媛　松山（Day 3–4）", items:[
+ {h:"宇和島鯛めし",v:0,meta:"道後與市區餐廳",
+  p:"生鯛魚片拌進蛋汁醬油，澆在熱白飯上。",
+  tip:"松山還有另一種「松山鯛めし」是整條鯛魚炊飯，名字一樣但完全不同，兩種都值得試。"},
+ {h:"じゃこ天",v:1,meta:"松山城本丸廣場的じゃこ天烏龍麵 ¥750",
+  p:"整條小魚連骨打成漿現炸，愛媛的家常味。",
+  tip:"松山的烏龍麵湯頭偏甜，和香川是兩種風格，可以順便比較。"},
+ {h:"橘子汁與坊っちゃん団子",v:0,meta:"道後 HAIKARA 通",
+  p:"道後商店街有「水龍頭流出橘子汁」的名物，三色團子是溫泉街的老點心。"}
+]},
+{title:"直島（Day 5）", items:[
+ {h:"島上用餐要先想好",v:0,
+  p:"宮浦港「海の駅なおしま」周邊有幾家小餐館，但島上店家少、休息日多。",
+  warn:"12/31 島上餐廳與商店很可能休息。建議前一晚或當天早上在高松先買好飯糰、麵包帶上船，才不會在島上餓肚子。"}
+]}
+]) + LEGEND;
+
+/* 交通住宿 */
+document.getElementById("panel-move").innerHTML = sections([
+{title:"航班", items:[
+ {h:"去程 CI 178",v:1,meta:"12/27（日）14:30 桃園 第二航廈（T2）→ 17:55 高松機場",q:"桃園國際機場第二航廈",
+  p:"華航日本線目前在桃園第二航廈報到。",
+  warn:"航廈資訊來自 2026 年 9 月更新的旅遊網站，不是華航官方；桃園第三航廈北登機廊廳正在試營運，華航部分班次會移過去登機。出發前以電子機票或華航 App 顯示的航廈為準。"},
+ {h:"高松機場：只有一棟航廈",v:1,meta:"1F 到達大廳、國內／國際線報到櫃台、租車櫃台、巴士站｜2F 出發大廳",q:"高松空港",
+  p:"國內線與國際線在同一棟建築裡，不會走錯航廈。去程落地後在 1F 提行李、找租車櫃台；回程到 1F 國際線櫃台報到，再上 2F 出發。"},
+ {h:"回程 CI 179",v:1,meta:"1/2（六）18:55 高松機場 1F 國際線櫃台報到 → 21:05 桃園 T2",
+  tip:"車在 12/30 就還掉了，1/2 是搭機場巴士或計程車到航廈。高松機場小，但年初返鄉潮多，建議 16:30 前抵達。"}
+]},
+{title:"租車（只租 12/27–12/30）", items:[
+ {h:"取車：12/27（日）19:00　高松機場店",v:1,meta:"香川県高松市香南町由佐 2430｜尚未付款，取車時付 ¥34,320",q:"高松空港 レンタカー",
+  p:"訂單編號 TXR675929。Klook 訂單上的 NT$6,952 只是折算參考金額，實際全額在門市付。",
+  tip:"班機 17:55 落地，取車時間綁定 19:00，中間剛好通關提行李。想提早要先打電話問門市。刷卡幣別選日圓，避免門市即時換匯吃匯差。"},
+ {h:"還車：12/30（三）19:00　高松車站店",v:1,meta:"香川県高松市西の丸町 5-20｜就在 JR 高松駅旁",q:"高松市西の丸町5-20",
+  p:"取車和還車是不同門市，別開回機場。從民宿（錦町）走到這裡約 8 分鐘。",
+  warn:"車只租到 12/30。12/31、1/1、1/2 三天全部靠走路、琴電、渡輪、巴士與計程車，行程已照這個前提重排。"},
+ {h:"租車規範",v:1,meta:"滿油取還車｜無限里程｜取車時付款",
+  p:"取車是滿油、還車也必須滿油。",
+  tip:"12/30 傍晚先在高松市區加油站加滿再進門市，收據留著。門市補油的單價通常比加油站貴不少。"},
+ {h:"免費取消期限",v:1,meta:"2026/12/20（日）19:00 前"},
+ {h:"取車必備",v:1,
+  p:"台灣駕照正本、監理所核發的日文譯本、護照、主駕駛人本人的實體國際信用卡。",
+  tip:"四樣缺一不可，尤其信用卡必須是主駕駛本人的實體卡。"},
+ {h:"ETC 卡：這趟必租",v:1,meta:"約 ¥330｜過路費還車時一起結清",
+  p:"Day 2 要上高速公路的大豊 IC 已改成 ETC 專用，沒卡進不去。取車時當場確認卡片已插進車載機、機器有亮燈。",
+  tip:"詳細付費方式見下方「高速公路過路費怎麼付」。"}
+]},
+{title:"開車路線（12/27–12/30）", lead:"四天約 400 公里，冬季山區路段請預留彈性。", items:[
+ {h:"高松機場 → 琴平",v:1,meta:"約 40 分｜一般道"},
+ {h:"琴平 → 大步危峽 → 蔓橋",v:1,meta:"約 1 小時＋30 分｜國道 32 號轉山路",
+  tip:"蔓橋一帶道路窄、彎多，會車要放慢；冬天可能結霜，避免天黑後開這段。"},
+ {h:"祖谷 → 高知市區",v:1,meta:"約 1 小時 20 分｜高知自動車道"},
+ {h:"高知 → 桂濱",v:1,meta:"約 25 分"},
+ {h:"高知 → 松山",v:1,meta:"約 2 小時 15 分｜高知道→松山道"},
+ {h:"松山 → 高松",v:1,meta:"約 2 小時｜松山道→高松道"},
+ {h:"高松市區 → 高松車站店還車",v:1,meta:"12/30 19:00 前｜西の丸町 5-20"}
+]},
+{title:"高速公路過路費怎麼付", lead:"這趟會上高速公路的只有三段：Day 2、Day 3、Day 4。", items:[
+ {h:"收費站有兩種車道",v:1,
+  p:"紫色招牌「ETC」車道：車載機自動扣款，不用停車，時速 20 公里以下緩慢通過。綠色招牌「一般」車道：停車繳費，可付現金（日圓）或信用卡。",
+  tip:"「ETC／一般」混合車道兩種都能走。進站前先看清楚招牌顏色再切車道。"},
+ {h:"四國有收費站已改成 ETC 專用",v:1,meta:"NEXCO 西日本 ETC 專用料金所一覽（2026/4/8 版）",
+  p:"ETC 專用收費站沒有一般車道，沒插卡的車無法進出。這趟會經過的是高知道大豊 IC（2026/4/8 起），Day 2 從大步危往高知就是從這裡上高速。",
+  warn:"Day 3、Day 4 會沿著本線經過松山道的土居、新居浜與高松道的さぬき豊中，這幾個也是 ETC 專用，但只要不在那裡下交流道就不受影響。導航若叫你從這幾個 IC 下，要先確認 ETC 卡插著。"},
+ {h:"租車的 ETC 怎麼算",v:1,meta:"ETC 卡租借約 ¥330",
+  p:"取車時加租 ETC 卡，插在車載機裡。四天的過路費會累計在卡上，12/30 還車時一次結清，可刷卡。",
+  tip:"取車時請門市當場插卡並確認機器亮燈、有提示音。上高速前再看一次卡有沒有插好。"},
+ {h:"萬一誤闖 ETC 專用道",v:1,
+  p:"不要倒車或迴轉。往標示「サポート」或「ETC／サポート」的車道前進，停車後按對講機，依工作人員指示處理。",
+  tip:"對講機可以說「ETCカードがありません」（我沒有 ETC 卡）。"},
+ {h:"各段過路費（估算）",v:0,meta:"普通車｜ETC 價格",
+  p:"Day 2 大豊 IC → 高知 IC 約 ¥1,000–1,300；Day 3 高知 IC → 松山 IC 約 ¥4,000–4,800；Day 4 松山 IC → 高松中央 IC 約 ¥4,500–5,200。三段合計約 ¥9,500–11,300，落在預算頁的 ¥10,000–13,000 區間內。",
+  tip:"精確金額可到 NEXCO 西日本官網的「高速料金・ルート検索」查。Day 1 機場到琴平、Day 2 琴平到大步危都走一般道，不用過路費。"}
+]},
+{title:"還車後的交通（12/31–1/2）", lead:"三天全靠步行、琴電、渡輪與巴士，必要時搭計程車。", items:[
+ {h:"民宿的位置幫了大忙",v:1,
+  p:"Corridor Bay 103 在錦町，走到 JR 高松駅／高松築港站 5–8 分、走到高松港約 12 分鐘，三天的起點都在步行範圍內。"},
+ {h:"琴電 高松築港 ⇄ 綾川",v:1,meta:"大人單程 ¥590｜約 40 分｜綾川駅走到 AEON 約 3–5 分",
+  p:"綾川發往高松築港的末班約 22:03。",
+  warn:"12/30–1/3 行駛假日時刻表，班次比平日少，上車前先看好回程時間。"},
+ {h:"琴電 高松築港 ⇄ 栗林公園",v:1,meta:"大人單程 ¥200｜約 9 分"},
+ {h:"屋島山上接駁巴士",v:1,meta:"高松駅 7 號乘車處直達｜冬休 12/25–1/7 行駛｜一天 4 往復",q:"高松駅 バスのりば",
+  p:"路線是高松駅→兵庫町→琴電屋島駅→四國村→屋島山上。也可改搭琴電志度線到琴電屋島駅（¥390）再轉接駁巴士（約 8 分）。",
+  warn:"下山末班約 16:54，早於日落，所以屋島排在上午。直通便的實際時刻官網只放 PDF，出發前打 ことでんバス 087-821-3033 確認。"},
+ {h:"高松空港リムジンバス",v:1,meta:"高松駅／高松築港 大人 ¥1,300・約 45 分｜栗林公園前 大人 ¥1,000・約 23 分",
+  p:"2026/10/1 起調漲，高松駅一段由 ¥1,000 改為 ¥1,300。小孩半價。",
+  warn:"班次配合每月航班調整，出發前一定要查當月時刻表；部分班次不經瓦町。"},
+ {h:"計程車",v:1,meta:"JR 高松駅 → 高松空港 跳表約 ¥6,300 起｜定額計程車 ¥5,200–6,000（需事前預約）",
+  p:"高松空港的定額運賃分三區，普通車 ¥5,200／¥5,800／¥6,000，22:00–翌 5:00 加成。",
+  tip:"叫車可用「香川Taxi」App 或 LINE 加「香川モビリティサービス」，24 小時受理。三人加行李可能需要大型車，價格另計。"},
+ {h:"渡輪 高松港 ⇄ 宮浦港（四國汽船）",v:1,meta:"約 50 分｜大人單程 ¥520・當日往復 ¥990｜只收現金",q:"高松港 フェリーターミナル",
+  p:"高松發：8:12／10:14／12:40／15:35／18:05。宮浦發：7:00／9:07／11:30／14:20／17:00。",
+  warn:"高速船（約 30 分、¥1,220）只在 3–11 月的週末例假日加開，12/31 不能指望。年末年始可能有特別時刻表，出發前查四國汽船官網。"}
+]},
+{title:"住宿", items:[
+ {h:"12/27 すずめのお宿 すずめの間",v:1,meta:"琴平｜退房 10:00 前｜NT$2,457",q:"すずめのお宿 琴平",
+  p:"香川県仲多度郡琴平町 1329"},
+ {h:"12/28 ゲストハウス 叶和 南川添 A",v:1,meta:"高知（Airbnb）｜退房 10:00 前｜NT$4,285",q:"高知市南川添15-25",
+  p:"高知県高知市南川添 15-25"},
+ {h:"12/29 Check In Matsuyama",v:1,meta:"松山｜退房 11:00 前｜NT$3,214",q:"Check In Matsuyama 松山",
+  p:"愛媛県松山市三番町 2-7-3"},
+ {h:"12/30–1/2 Corridor Bay 103",v:1,meta:"高松連住 3 晚｜入住 16:00 起｜退房 10:00 前｜NT$15,934",q:"高松市錦町1丁目23-10",
+  p:"香川県高松市錦町 1 丁目 23-10",
+  tip:"三晚定點，行李可以攤開；走路到高松港約 12 分鐘。"}
+]}
+]) + LEGEND;
+
+/* 預算 */
+document.getElementById("panel-cost").innerHTML =
+'<div class="sec"><h2>已付款</h2>'
++ '<div class="item">'
++ '<div class="money"><div class="k">機票 3 人含稅<small>華航 CI 178／CI 179</small></div><div class="v">NT$46,304</div></div>'
++ '<div class="money"><div class="k">住宿 6 晚<small>琴平・高知・松山・高松</small></div><div class="v">NT$25,890</div></div>'
++ '<div class="total"><span>小計</span><b>NT$72,194</b></div></div></div>'
+
++ '<div class="sec"><h2>現場待付</h2>'
++ '<div class="item">'
++ '<div class="money"><div class="k">租車<small>12/27 取車時於高松機場店付清</small></div><div class="v">¥34,320</div></div>'
++ '<div class="money"><div class="k">門票與活動 3 人<small>遊覽船 1,200＋蔓橋 550＋松山城 1,040＋道後溫泉 700＋直島渡輪往復 990＋栗林公園 500＋掬月亭 700 ≈ 每人 ¥5,680</small></div><div class="v">¥17,000–18,000</div></div>'
++ '<div class="money"><div class="k">高速公路過路費<small>12/27–12/30 四天</small></div><div class="v">¥10,000–13,000</div></div>'
++ '<div class="money"><div class="k">加油<small>四天約 400 公里，還車需滿油</small></div><div class="v">¥6,000–8,000</div></div>'
++ '<div class="money"><div class="k">停車費<small>金刀比羅宮、蔓橋、高知、松山</small></div><div class="v">¥2,000–3,000</div></div>'
++ '<div class="money"><div class="k">大眾運輸與計程車 3 人<small>琴電綾川往返 1,180＋栗林往返 400＋機場巴士 1,300＋屋島接駁 ≈ 每人 ¥3,500–4,000；若搭計程車去機場另加</small></div><div class="v">¥10,000–17,000</div></div>'
++ '<div class="money"><div class="k">餐食 3 人 6 天<small>以每天 ¥10,000–12,000 估</small></div><div class="v">¥60,000–70,000</div></div>'
++ '<div class="total"><span>小計（估算）</span><b>¥139,000–163,000</b></div></div></div>'
+
++ '<div class="sec"><h2>全程合計</h2>'
++ '<div class="item">'
++ '<div class="money"><div class="k">已付款</div><div class="v">NT$72,194</div></div>'
++ '<div class="money"><div class="k">現場待付（換算）<small>以 ¥100 ≈ NT$21 估算</small></div><div class="v">NT$29,000–34,000</div></div>'
++ '<div class="total"><span>3 人總計（估算）</span><b>NT$101,000–106,000</b></div>'
++ '<div class="total"><span>每人約</span><b>NT$34,000–35,500</b></div>'
++ '<p class="tip">機票、住宿、租車金額為訂單揭露數字；其餘為估算，未含伴手禮與購物。伴手禮抓每人 NT$5,000–10,000 另計。</p>'
++ '</div></div>' + LEGEND;
+
+/* 實用資訊 */
+const TODO = [
+ {g:"現在就能辦", items:[
+  ["現在","辦駕照日文譯本（各地監理站當場可領，規費 NT$100，帶駕照正本與身分證正本）"],
+  ["現在","確認駕照未過期——過期要先換照才能辦譯本。台灣的國際駕照在日本無效，別帶錯"],
+  ["現在","和琴平民宿すずめのお宿確認 21:00 前後可否入住（班機 17:55 才落地），並告知 CI 178 班機號碼"],
+  ["現在","確認護照效期至少到 2027/07"],
+  ["現在","確認三人的旅平險與醫療險涵蓋自駕"]
+ ]},
+ {g:"12 月中前", items:[
+  ["12/20","租車免費取消期限 19:00。確認不取消的話，順便問門市：冬胎／雪鏈、ETC 卡（必租）、免責補償 CDW 加保"],
+  ["前 3 天","華航 App 或電子機票確認 CI 178 的桃園報到航廈（目前是 T2，留意是否改到 T3 北廊廳）"],
+  ["12 月中","訂 eSIM 或 Wi-Fi 分享器"],
+  ["12 月中","查 benesse-artsite.jp 開館日曆，確認 12/31 直島美術館開放狀況"],
+  ["12 月中","查四國汽船官網，確認 12/31 高松⇄宮浦是否有年末特別時刻表"],
+  ["12 月中","查 AEON Mall 綾川官網，確認 2027 元旦營業與初売り時間"],
+  ["12 月中","打 ことでんバス 087-821-3033 確認 1/1 屋島山上接駁巴士（高松駅直通便）發車時刻"],
+  ["12 月中","查 1/2 當月的高松空港リムジンバス時刻表，抓 16:00 前後班次"],
+  ["12 月中","換日圓現金，每人 ¥20,000–30,000；開通金融卡海外提款"]
+ ]},
+ {g:"出發前一週", items:[
+  ["前 7 天","填 Visit Japan Web，三人份都要"],
+  ["前 7 天","確認華航託運行李額度與回程伴手禮空間"],
+  ["前 3 天","華航線上報到"],
+  ["前 3 天","手機下載離線地圖（Google Maps 四國離線區域）"],
+  ["前 3 天","把這份手帳存到三人的手機（加入主畫面即可離線開）"],
+  ["前 1 天","抄下四間住宿電話、Airbnb 入住說明、租車門市電話"],
+  ["前 1 天","把行程表、訂房憑證列印一份紙本備用"]
+ ]},
+ {g:"出發當天", items:[
+  ["當天","文件四件套隨身：護照、駕照正本、日文譯本、主駕駛人本人的實體信用卡"],
+  ["當天","現金與信用卡分開放"],
+  ["當天","常備藥放隨身行李，不要託運"]
+ ]}
+];
+
+const PACK = [
+ {g:"證件與錢", items:[
+  "護照（效期 6 個月以上）","台灣駕照正本","監理所日文譯本","主駕駛人實體國際信用卡",
+  "日圓現金 每人 ¥20,000–30,000","旅平險保單資料","訂房與租車憑證紙本"
+ ]},
+ {g:"冬衣（四國冬天約 3–10°C，祖谷山區更低）", items:[
+  "發熱衣兩到三套","防風防水厚外套","圍巾、手套、毛帽","好走的防滑鞋（785 階石階用）",
+  "泡湯好穿脫的衣物","厚襪、室內保暖襪"
+ ]},
+ {g:"爸媽專用", items:[
+  "常備藥與慢性病藥（附處方箋影本）","備用眼鏡","暖暖包一盒","保溫瓶",
+  "登山杖或折疊拐杖（金刀比羅宮參道也有木杖可租）","痠痛貼布"
+ ]},
+ {g:"3C 與車上", items:[
+  "行動電源","車用手機架","車用充電線（USB-C／Lightning）","延長線一條","相機與記憶卡"
+ ]},
+ {g:"泡湯與衛生", items:[
+  "小毛巾三條（外湯毛巾要另外買或租）","換洗內衣","束口袋裝濕毛巾","口罩","個人盥洗用品"
+ ]},
+ {g:"其他", items:[
+  "摺疊購物袋兩個（日本店家不附袋）","折傘","夾鏈袋","行李秤","保鮮盒或餐具（直島帶食物用）",
+  "空的摺疊行李袋裝伴手禮"
+ ]}
+];
+
+function checklist(key, groups, withWhen){
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || "{}"); } catch(e){ saved = {}; }
+  let h = "";
+  groups.forEach((g,gi)=>{
+    h += '<div class="sec"><h2>'+esc(g.g)+'</h2><div class="item">';
+    g.items.forEach((it,ii)=>{
+      const id = key+"-"+gi+"-"+ii;
+      const txt = withWhen ? it[1] : it;
+      const when = withWhen ? it[0] : "";
+      h += '<label class="chk" for="'+id+'"><input type="checkbox" id="'+id+'" data-k="'+id+'"'
+         + (saved[id] ? " checked" : "") + '><span>'
+         + (when ? '<span class="when'+(when==="現在"||when==="12/20"?" now":"")+'">'+esc(when)+'</span>' : '')
+         + esc(txt) + '</span></label>';
+    });
+    h += '</div></div>';
+  });
+  return h;
+}
+
+function bindChecks(root, key){
+  root.querySelectorAll('input[type="checkbox"][data-k^="'+key+'"]').forEach(cb=>{
+    cb.addEventListener("change", ()=>{
+      try{
+        const s = JSON.parse(localStorage.getItem(key) || "{}");
+        if (cb.checked) s[cb.dataset.k] = 1; else delete s[cb.dataset.k];
+        localStorage.setItem(key, JSON.stringify(s));
+      } catch(e){ /* 無法儲存時仍可勾選，只是重開會清空 */ }
+    });
+  });
+}
+
+const infoEl = document.getElementById("panel-info");
+infoEl.innerHTML =
+  '<div class="sec"><h2>出發前待辦</h2><p class="lead">勾選狀態會留在這台裝置上。</p></div>'
++ checklist("todo", TODO, true)
++ '<button class="reset" type="button" data-reset="todo">清除待辦勾選</button>'
++ '<div class="sec"><h2>行李清單</h2><p class="lead">三人共用。車用小物只有 12/27–12/30 派得上場，後三天是大眾運輸。</p></div>'
++ checklist("pack", PACK, false)
++ '<button class="reset" type="button" data-reset="pack">清除行李勾選</button>'
++ sections([
+{title:"入境日本", items:[
+ {h:"簽證：不用辦",v:1,
+  p:"台灣護照赴日觀光免簽，停留上限 90 天。護照建議效期 6 個月以上且無破損。",
+  tip:"入境審查官可能查驗回程機票與住宿證明，訂位紀錄存成電子檔備查。"},
+ {h:"Visit Japan Web：不強制，但建議先填",v:1,
+  p:"VJW 不是簽證，是入境審查與海關申報的線上登錄。2024/1/25 起兩組 QR Code 已合併為一組，掃一次完成兩項手續。",
+  tip:"沒填也能入境，現場填紙本入境卡走人工通道即可。三人要各自登錄，可用同一帳號帶同行家人。"},
+ {h:"入境現金申報",v:1,
+  p:"攜帶超過 ¥1,000,000 等值現金或旅行支票須申報。"}
+]},
+{title:"開車證件：這一項最容易搞錯", items:[
+ {h:"台灣的國際駕照在日本不能用",v:1,
+  p:"日本依《日內瓦道路交通公約》承認國際駕照，台灣不是締約國，所以台灣核發的國際駕照在日本無效。",
+  warn:"台日之間走的是另一套互惠制度：必須「台灣駕照正本 ＋ 公路監理單位核發的日文譯本 ＋ 護照」三樣一起帶，缺一不可。自己翻譯或旅行社翻譯的都無效。"},
+ {h:"日文譯本怎麼辦",v:1,meta:"規費 NT$100｜全國各公路監理單位皆可辦、可越區｜臨櫃當日領取",
+  p:"帶駕照正本與身分證正本臨櫃申請。也可從公路局線上申辦寄送，約 3–5 個工作天。",
+  tip:"譯本本身沒有獨立期限，跟著駕照走；只要駕照沒換發、地址姓名沒變更，以後赴日可繼續使用。譯本上的住址要和駕照一致，不符要先去監理單位辦變更。"},
+ {h:"駕照過期就不能用",v:1,
+  p:"駕照逾有效期限日方視為無效，必須先換發新照（1 吋照片 1 張、規費 NT$200）再申請譯本。",
+  tip:"三人之中誰要開車就辦誰的。租車現場也要主駕駛人本人的實體國際信用卡。"},
+ {h:"可駕駛期間",v:1,
+  p:"自入境日本之日起算 1 年內適用（前提是台灣駕照仍在效期內）。"}
+]},
+{title:"日本交通規則", items:[
+ {h:"靠左行駛、右駕",v:1,
+  p:"一般道路速限 60 km/h、高速公路 100 km/h，實際依標誌為準。高速公路最左側為行車道、最右側為超車道。"},
+ {h:"酒駕零容忍",v:1,
+  p:"吐氣酒精濃度超標即違法，同車者也可能連帶受罰。骨付鳥配啤酒那晚請找不開車的人當駕駛，或走路、搭計程車。"},
+ {h:"全車繫安全帶、6 歲以下要兒童座椅",v:1,
+  p:"後座也必須全程繫安全帶。"},
+ {h:"「止まれ」必須完全停止",v:1,
+  p:"紅色倒三角標誌處要在停止線前完全停住，左右確認無來車才能前進。平交道前也一律停車確認。"},
+ {h:"不能路邊隨意停車",v:1,
+  p:"日本路邊不畫停車格，必須停進停車場或收費停車位。"},
+ {h:"ETC 卡：這趟必租",v:1,meta:"租借約 ¥330",
+  p:"四國已有多個收費站改為 ETC 專用，其中大豊 IC 就在 Day 2 的路線上。取車時一併租，還車時結清過路費。"}
+]},
+{title:"冬季自駕（僅 12/27–12/30）", items:[
+ {h:"山區路況",v:0,
+  p:"12 月底的祖谷、大步危一帶可能結霜或零星積雪，路窄彎多。",
+  tip:"取車時先問門市這趟路線是否需要雪胎或鏈條，多數租車公司冬季會直接配冬胎。山路盡量在天黑前開完，冬天約 17:00 就暗了。"},
+ {h:"加油站",v:0,
+  p:"鄉間加油站傍晚就關、元旦可能休息。",
+  tip:"油表到一半就補，別等到剩四分之一。還車前要加滿，收據要留著。"}
+]},
+{title:"年末年始要注意", items:[
+ {h:"12/29–1/3 是日本的長假",v:1,
+  p:"美術館、部分景點與餐廳會休息，交通與市場則特別擁擠。",
+  warn:"已確認會影響行程的：高知城天守 12/26–1/1 休館（12/29 進不去）；宮浦發最後一班渡輪 17:00，高速船冬季不加開；直島美術館與島上餐廳年末年始多休。已確認照常的：栗林公園全年無休、掬月亭只休年末、金刀比羅宮境內 6:00–18:00、松山城年末年始不休、AEON 綾川元旦營業、屋島 Skyway 6:30–22:00。另注意屋島山上接駁巴士下山末班約 16:54。"},
+ {h:"元旦的兩個小確幸",v:1,
+  p:"栗林公園 1/1 入園免費；AEON 綾川 2026 年元旦是 9:00 開始初売り、販售福袋。",
+  tip:"2027 年的元旦時間官方都還沒公布，12 月中再查一次官網。"}
+]},
+{title:"免稅新制：這趟適用新規則", items:[
+ {h:"2026/11/1 起改為「出境退稅」",v:1,
+  p:"以前是店家當場扣掉消費稅，現在改成先付含稅價，出境時經海關確認商品帶出國後才退還消費稅相當額。你們 12 月的採買全部適用新制。",
+  warn:"退稅要在購買日起 90 天內於出境海關完成確認。高松機場的實際作業方式（KIOSK 位置、免稅品能否託運）出發前要再確認，保險做法是把免稅品放手提行李。"},
+ {h:"包裝與上限放寬",v:1,
+  p:"一般物品與消耗品的區分取消，藥妝食品不再需要特殊封膜包裝，消耗品 50 萬日圓上限也廢止。",
+  tip:"以前封膜的藥妝不能在日本拆封，新制沒有這個限制，行李比較好打包。"}
+]},
+{title:"支付與網路", items:[
+ {h:"現金",v:0,
+  p:"四國的小店、烏龍麵店、停車場很多只收現金，建議每人帶 ¥20,000–30,000 現金。",
+  tip:"7-11 的 ATM 可用台灣金融卡提領日圓，出國前先開通海外提款功能。"},
+ {h:"網路",v:0,
+  p:"eSIM 或分享器擇一。前四天自駕導航、後三天查電車巴士班次都很吃網路，建議三人都有。"}
+]},
+{title:"緊急聯絡", items:[
+ {h:"日本境內",v:1,
+  p:"警察 110｜火災與救護 119｜日本觀光廳訪日外國人諮詢熱線 050-3816-2787（24 小時、有中文）。"},
+ {h:"台灣",v:0,
+  p:"外交部旅外國人急難救助全球免付費專線 800-0885-0885。",
+  tip:"另建議出發前記下駐大阪辦事處的急難手機，並把租車門市電話存進手機。"}
+]},
+{title:"資料來源", lead:"票價與營業時間查證於 2026 年 9 月，出發前請再確認一次。", items:[
+ {h:"證件與入境",
+  p:"交通部公路局「臺日駕照互惠」問答、臺北市區監理所日文譯本申請頁、台北駐大阪經濟文化辦事處駕照日文譯本說明、Visit Japan Web 相關說明。"},
+ {h:"景點",
+  p:"高知城官方網站（休館日）、栗林公園官方利用案內與香川縣入園料改定公告、松山城官方網站、道後溫泉官方網站、屋島 Skyway 無料化公告（高松市／瀨戶‧高松廣域連携）、やしまーる 官方與高松市資料、祖谷蔓橋與大步危遊覽船官方資訊。"},
+ {h:"交通",
+  p:"四國汽船高松—宮浦航路時刻與運賃、琴電高松築港發普通運賃表（2023/5/20 改定）與綾川駅時刻表、ことでんバス屋島山上シャトルバス（高松駅直通便）公告、高松空港官方巴士與計程車運賃頁（計程車 2026/3/16 更新、定額運賃令和8年3月16日改定）。"},
+ {h:"購物與免稅",
+  p:"AEON Mall 綾川官方營業時間頁與 2026 年初売り公告、觀光廳／國稅廳消費稅免稅制度改正（2026/11/1 リファンド方式）相關說明。"},
+ {h:"高速公路與航廈",
+  p:"NEXCO 西日本「ETC 專用料金所のご案内」與 ETC 專用料金所一覽（2026/4/8 時點）、NEXCO 西日本 2026 年春 30 料金所 ETC 專用化公告；桃園機場航廈分布（伊恩尖旅生活，2026/9/14 更新）、高松機場航廈樓層配置（旅行讀賣 tabi-mag）。"}
+]}
+])
++ '<div class="sec"><h2>日文小抄</h2><p class="lead">給爸媽看也行，直接把螢幕拿給店家看最快。</p><div class="item">'
++ [["満タンでお願いします","請加滿油"],["大人3枚ください","要三張大人票"],["これをください","我要這個"],
+   ["クレジットカードは使えますか","可以刷卡嗎"],["写真を撮ってもらえますか","可以幫我們拍照嗎"],
+   ["温かいうどん、小でお願いします","熱的烏龍麵，小份"],["お勘定お願いします","麻煩結帳"],
+   ["駐車場はどこですか","停車場在哪裡"]]
+  .map(p => '<div class="phrase"><div class="jp">'+p[0]+'</div><div class="zh">'+p[1]+'</div></div>').join("")
++ '</div></div>' + LEGEND;
+
+bindChecks(infoEl, "todo");
+bindChecks(infoEl, "pack");
+infoEl.querySelectorAll("[data-reset]").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    const k = b.dataset.reset;
+    try{ localStorage.removeItem(k); } catch(e){}
+    infoEl.querySelectorAll('input[data-k^="'+k+'"]').forEach(cb=>{ cb.checked = false; });
+  });
+});
+
+/* ---------- 匯率換算機 ---------- */
+/* ---------- 列印／存成 PDF：攤平成完整文件 ---------- */
+(function(){
+  let snapshot = null;
+  function expand(){
+    snapshot = { html: view.innerHTML, day: cur,
+                 hidden: [...document.querySelectorAll(".panel")].map(p=>p.hidden) };
+    view.innerHTML = DAYS.map(render).join("");
+    document.querySelectorAll(".panel").forEach(p=>{ p.hidden = false; });
+  }
+  function restore(){
+    if (!snapshot) return;
+    view.innerHTML = snapshot.html;
+    document.querySelectorAll(".panel").forEach((p,i)=>{ p.hidden = snapshot.hidden[i]; });
+    cur = snapshot.day;
+    snapshot = null;
+  }
+  window.addEventListener("beforeprint", expand);
+  window.addEventListener("afterprint", restore);
+  if (window.matchMedia){
+    const mq = window.matchMedia("print");
+    const onChange = e => e.matches ? expand() : restore();
+    if (mq.addEventListener) mq.addEventListener("change", onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
+})();
+
+(function(){
+  const bg = document.getElementById("cvtbg");
+  const jpy = document.getElementById("jpy");
+  const twd = document.getElementById("twd");
+  const rate = document.getElementById("rate");
+
+  try{
+    const saved = localStorage.getItem("rate100");
+    if (saved) rate.value = saved;
+  } catch(e){}
+
+  const r = () => {
+    const v = parseFloat(rate.value);
+    return (isFinite(v) && v > 0) ? v / 100 : 0.21;
+  };
+  const round = n => Math.round(n * 100) / 100;
+
+  function fromJpy(){
+    const v = parseFloat(jpy.value);
+    twd.value = isFinite(v) ? round(v * r()) : "";
+  }
+  function fromTwd(){
+    const v = parseFloat(twd.value);
+    jpy.value = isFinite(v) ? Math.round(v / r()) : "";
+  }
+
+  jpy.addEventListener("input", fromJpy);
+  twd.addEventListener("input", fromTwd);
+  rate.addEventListener("input", ()=>{
+    try{ localStorage.setItem("rate100", rate.value); } catch(e){}
+    if (jpy.value !== "") fromJpy(); else if (twd.value !== "") fromTwd();
+  });
+
+  document.querySelectorAll(".quick button").forEach(b=>{
+    b.addEventListener("click", ()=>{ jpy.value = b.dataset.jpy; fromJpy(); });
+  });
+
+  function open(){ bg.hidden = false; setTimeout(()=>jpy.focus(), 60); }
+  function close(){ bg.hidden = true; }
+
+  document.getElementById("fab").addEventListener("click", open);
+  document.getElementById("cvtclose").addEventListener("click", close);
+  bg.addEventListener("click", e=>{ if (e.target === bg) close(); });
+  document.addEventListener("keydown", e=>{ if (e.key === "Escape" && !bg.hidden) close(); });
+})();
+
+/* ---------- 分頁切換 ---------- */
+const tabs = [...document.querySelectorAll(".tab")];
+tabs.forEach(t=>{
+  t.addEventListener("click",()=>{
+    tabs.forEach(o=>{
+      const on = o===t;
+      o.setAttribute("aria-selected", on?"true":"false");
+      const p = document.getElementById(o.getAttribute("aria-controls"));
+      p.hidden = !on;
+      if(on){ p.classList.remove("fade"); void p.offsetWidth; p.classList.add("fade"); }
+    });
+    rail.style.display = (t.id==="tab-plan") ? "flex" : "none";
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>
